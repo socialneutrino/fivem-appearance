@@ -330,7 +330,7 @@ end)
 
 RegisterNetEvent('fivem-appearance:saveOutfit', function()
 	local keyboard, name = exports["nh-keyboard"]:Keyboard({
-		header = "Name Outfit", 
+		header = "Save your outfit", 
 		rows = {"Outfit name here"}
 	})
 	if keyboard then
