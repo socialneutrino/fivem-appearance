@@ -141,9 +141,12 @@ Citizen.CreateThread(function()
 			if IsControlPressed(1,  38) then
 				Citizen.Wait(500)
 
+				TriggerEvent('cd_drawtextui:HideUI')
+
 				if CurrentAction == 'clothingMenu' then
 
 					TriggerEvent("fivem-appearance:clothingShop")
+					
 
 				end
 
@@ -219,6 +222,8 @@ RegisterNetEvent('fivem-appearance:clothingShop', function()
             }
         }
     })
+	
+		
 end)
 
 RegisterNetEvent('fivem-appearance:clothingMenu', function()
@@ -277,6 +282,7 @@ RegisterNetEvent('fivem-appearance:pickNewOutfit', function(data)
 			},
 		})
 	end
+	TriggerEvent('cd_drawtextui:ShowUI', 'show', "Press [E] To Change Clothing")
 end)
 
 RegisterNetEvent('fivem-appearance:getOutfits')
@@ -323,41 +329,20 @@ AddEventHandler('fivem-appearance:setOutfit', function(data)
 end)
 
 RegisterNetEvent('fivem-appearance:saveOutfit', function()
-    if Config.UseNewNHKeyboard then
-        local keyboard, name = exports["nh-keyboard"]:Keyboard({
-            header = "Name Outfit", 
-            rows = {"Outfit name here"}
-        })
-        if keyboard then
-            if name then
-                local playerPed = PlayerPedId()
-                local pedModel = exports['fivem-appearance']:getPedModel(playerPed)
-                local pedComponents = exports['fivem-appearance']:getPedComponents(playerPed)
-                local pedProps = exports['fivem-appearance']:getPedProps(playerPed)
-                Citizen.Wait(500)
-                TriggerServerEvent('fivem-appearance:saveOutfit', name, pedModel, pedComponents, pedProps)
-            end
-        end
-    else
-        local keyboard = exports["nh-keyboard"]:KeyboardInput({
-            header = "Name Outfit", 
-            rows = {
-                {
-                    id = 0, 
-                    txt = ""
-                }
-            }
-        })
-        if keyboard ~= nil then
-            local playerPed = PlayerPedId()
-            local pedModel = exports['fivem-appearance']:getPedModel(playerPed)
-            local pedComponents = exports['fivem-appearance']:getPedComponents(playerPed)
-            local pedProps = exports['fivem-appearance']:getPedProps(playerPed)
-            Citizen.Wait(500)
-            TriggerServerEvent('fivem-appearance:saveOutfit', keyboard[1].input, pedModel, pedComponents, pedProps)
-            
-        end
-    end
+	local keyboard, name = exports["nh-keyboard"]:Keyboard({
+		header = "Name Outfit", 
+		rows = {"Outfit name here"}
+	})
+	if keyboard then
+		if name then
+			local playerPed = PlayerPedId()
+			local pedModel = exports['fivem-appearance']:getPedModel(playerPed)
+			local pedComponents = exports['fivem-appearance']:getPedComponents(playerPed)
+			local pedProps = exports['fivem-appearance']:getPedProps(playerPed)
+			Citizen.Wait(500)
+			TriggerServerEvent('fivem-appearance:saveOutfit', name, pedModel, pedComponents, pedProps)
+		end
+	end
 end)
 
 RegisterNetEvent('fivem-appearance:deleteOutfitMenu', function(data)
